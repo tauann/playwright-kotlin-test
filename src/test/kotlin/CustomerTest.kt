@@ -3,7 +3,7 @@ import org.junit.jupiter.api.Test
 import page.ListPage
 import util.BaseTest
 
-class CustomerPage : BaseTest() {
+class CustomerTest : BaseTest() {
 
     private val pageUrl = "https://www.grocerycrud.com/v1.x/demo/my_boss_is_in_a_hurry/bootstrap"
     private val saveSuccessMessage =
