@@ -1,9 +1,6 @@
 package util
 
-import com.microsoft.playwright.Browser
-import com.microsoft.playwright.BrowserContext
-import com.microsoft.playwright.Page
-import com.microsoft.playwright.Playwright
+import com.microsoft.playwright.*
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeAll
@@ -11,13 +8,13 @@ import org.junit.jupiter.api.BeforeEach
 
 abstract class BaseTest {
 
-    protected lateinit var page: Page
+    protected lateinit var pwPage: Page
     private lateinit var context: BrowserContext
 
     @BeforeEach
     fun createContextAndPage() {
         context = browser.newContext()
-        page = context.newPage()
+        pwPage = context.newPage()
     }
 
     @AfterEach
@@ -33,7 +30,7 @@ abstract class BaseTest {
         @BeforeAll
         fun launchBrowser() {
             playwright = Playwright.create()
-            browser = playwright.chromium().launch()
+            browser = playwright.chromium().launch(BrowserType.LaunchOptions().setHeadless(false))
         }
 
         @JvmStatic
