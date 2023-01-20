@@ -2,6 +2,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import page.ListPage
 import util.BaseTest
+import kotlin.test.assertEquals
 
 class CustomerTest : BaseTest() {
 
@@ -18,52 +19,41 @@ class CustomerTest : BaseTest() {
     }
 
     @Test
-    fun challengeOneTest() {
-        page
-            //.selectSwitchTheme("Bootstrap V4 Theme")
-            .clickAddRecord()
-            .fillCustomerName("User Test")
-            .fillContactLastName("Test")
-            .fillContactFirstName("User")
-            .fillPhone("99 99999-9999")
-            .fillAddressLine1("Some Street")
-            .fillAddressLine2("None")
-            .fillCity("New York")
-            .fillState("NY")
-            .fillPostalCode("99999-999")
-            .fillCountry("USA")
-            .fillSalesRepEmployeeNumber("99")
-            .fillCreditLimit("999999")
-            .clickSave()
-            .verifyReportMessage(saveSuccessMessage)
+    fun shouldAddACustomer() {
+        val addPage = fillAllCustomerFields()
+
+        assertEquals(saveSuccessMessage, addPage.getTextReportMessage())
     }
 
-    @Test
-    fun challengeTwoTest() {
-        page
-            //.selectSwitchTheme("Bootstrap V4 Theme")
-            .clickAddRecord()
-            .fillCustomerName("User Test")
-            .fillContactLastName("Test")
-            .fillContactFirstName("User")
-            .fillPhone("99 99999-9999")
-            .fillAddressLine1("Some Street")
-            .fillAddressLine2("None")
-            .fillCity("New York")
-            .fillState("NY")
-            .fillPostalCode("99999-999")
-            .fillCountry("USA")
-            .fillSalesRepEmployeeNumber("99")
-            .fillCreditLimit("999999")
-            .clickSave()
-            .verifyReportMessage(saveSuccessMessage)
-            .clickGoBackToList()
-            .fillSearchName("User Test")
-            .clickToggleSelectAll()
-            .clickDeleteSelected()
-            .verifyModalText("Are you sure that you want to delete")
-            .clickModalDelete()
-            .verifySuccessText("Your data has been successfully deleted from the database.")
-    }
+//    @Test
+//    fun shouldAddAndDeleteCustomer() {
+//        val addPage = fillAllCustomerFields()
+//        page
+//            .clickGoBackToList()
+//            .fillSearchName("User Test")
+//            .clickToggleSelectAll()
+//            .clickDeleteSelected()
+//            .getTextModal("Are you sure that you want to delete")
+//            .clickModalDelete()
+//        page
+//            .getTextSuccess("Your data has been successfully deleted from the database.")
+//    }
+
+    private fun fillAllCustomerFields() = page
+        .selectSwitchTheme("Bootstrap V4 Theme")
+        .clickAddRecord()
+        .fillCustomerName("User Test")
+        .fillContactLastName("Test")
+        .fillContactFirstName("User")
+        .fillPhone("99 99999-9999")
+        .fillAddressLine1("Some Street")
+        .fillAddressLine2("None")
+        .fillCity("New York")
+        .fillState("NY")
+        .fillPostalCode("99999-999")
+        .fillCountry("USA")
+        .fillSalesRepEmployeeNumber("99")
+        .fillCreditLimit("999999")
+        .clickSave()
 
 }

@@ -1,9 +1,9 @@
 package page
 
 import com.microsoft.playwright.Page
-import com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat
 
-class AddCustomerPage(private val page: Page) : CommonPage(page) {
+class AddCustomerPage(private val page: Page) : BasePage<AddCustomerPage>(page) {
+
 
     private val fieldCustomerName = page.locator("#field-customerName")
     private val fieldContactLastName = page.locator("#field-contactLastName")
@@ -20,6 +20,8 @@ class AddCustomerPage(private val page: Page) : CommonPage(page) {
     private val buttonSave = page.locator("#form-button-save")
     private val reportSuccess = page.locator("#report-success")
     private val linkGoBackToList = page.locator("text='Go back to list'")
+
+    override fun getThis(): AddCustomerPage = this
 
     fun fillCustomerName(text: String): AddCustomerPage {
         fieldCustomerName.fill(text)
@@ -86,10 +88,7 @@ class AddCustomerPage(private val page: Page) : CommonPage(page) {
         return this
     }
 
-    fun verifyReportMessage(message: String): AddCustomerPage {
-        assertThat(reportSuccess).hasText(message)
-        return this
-    }
+    fun getTextReportMessage(): String = getText(reportSuccess)
 
     fun clickGoBackToList(): ListPage {
         linkGoBackToList.click()

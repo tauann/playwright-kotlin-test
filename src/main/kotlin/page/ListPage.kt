@@ -1,10 +1,8 @@
 package page
 
 import com.microsoft.playwright.Page
-import com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat
-import java.util.regex.Pattern
 
-class ListPage(private val page: Page) : CommonPage(page) {
+class ListPage(private val page: Page) : BasePage<ListPage>(page) {
 
     private val buttonAddRecord = page.locator("text=Add Record")
     private val fieldSearchName = page.locator("input[name='customerName']")
@@ -14,6 +12,8 @@ class ListPage(private val page: Page) : CommonPage(page) {
     private val bodyModal = page.locator(".alert-delete-multiple")
     private val buttonModalDelete = page.locator(".delete-multiple-confirmation-button")
     private val messageSuccess = page.locator("span[data-growl='message']")
+
+    override fun getThis(): ListPage = this
 
     fun clickAddRecord(): AddCustomerPage {
         buttonAddRecord.click()
@@ -37,19 +37,13 @@ class ListPage(private val page: Page) : CommonPage(page) {
         return this
     }
 
-    fun verifyModalText(text: String): ListPage {
-        assertThat(bodyModal).hasText(Pattern.compile(".*$text.*"))
-        return this
-    }
+    fun getTextModal(text: String): String = getText(bodyModal).trim()
 
     fun clickModalDelete(): ListPage {
         buttonModalDelete.click()
         return this
     }
 
-    fun verifySuccessText(text: String): ListPage {
-        assertThat(messageSuccess).hasText(text)
-        return this
-    }
+    fun getTextSuccess(text: String): String = getText(messageSuccess)
 
 }
