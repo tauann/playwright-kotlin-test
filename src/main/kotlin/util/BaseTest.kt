@@ -6,15 +6,19 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 
+private const val URL = "https://www.grocerycrud.com/v1.x/demo/my_boss_is_in_a_hurry/bootstrap"
+
 abstract class BaseTest {
 
-    protected lateinit var pwPage: Page
+    protected lateinit var browserPage: Page
+
     private lateinit var context: BrowserContext
 
     @BeforeEach
     fun createContextAndPage() {
         context = browser.newContext()
-        pwPage = context.newPage()
+        browserPage = context.newPage()
+        browserPage.navigate(URL)
     }
 
     @AfterEach
@@ -30,7 +34,7 @@ abstract class BaseTest {
         @BeforeAll
         fun launchBrowser() {
             playwright = Playwright.create()
-            browser = playwright.chromium().launch(BrowserType.LaunchOptions().setHeadless(false))
+            browser = playwright.chromium().launch(BrowserType.LaunchOptions().setHeadless(true))
         }
 
         @JvmStatic

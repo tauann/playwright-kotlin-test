@@ -12,8 +12,8 @@ repositories {
 }
 
 dependencies {
-    implementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
     implementation("com.microsoft.playwright:playwright:1.28.1")
+    implementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
     testImplementation(kotlin("test"))
 }
 

@@ -4,46 +4,46 @@ import com.microsoft.playwright.Page
 
 class ListPage(private val page: Page) : BasePage<ListPage>(page) {
 
-    private val buttonAddRecord = page.locator("text=Add Record")
-    private val fieldSearchName = page.locator("input[name='customerName']")
-    private val clearSearchName = page.locator(".clear-search")
-    private val radioToggleSelectAll = page.locator(".select-all-none")
-    private val buttonDeleteSelected = page.locator(".delete-selected-button")
-    private val bodyModal = page.locator(".alert-delete-multiple")
-    private val buttonModalDelete = page.locator(".delete-multiple-confirmation-button")
-    private val messageSuccess = page.locator("span[data-growl='message']")
+    private val addRecordButton = page.locator("text=Add Record")
+    private val searchNameField = page.locator("input[name='customerName']")
+    private val clearSearchButton = page.locator(".clear-search")
+    private val toggleSelectAllButton = page.locator(".select-all-none")
+    private val deleteSelectedButton = page.locator(".delete-selected-button")
+    private val deleteAlertBody = page.locator(".alert-delete-multiple-one")
+    private val modalConfirmButton = page.locator(".delete-multiple-confirmation-button")
+    private val message = page.locator("span[data-growl='message']")
 
     override fun getThis(): ListPage = this
 
-    fun clickAddRecord(): AddCustomerPage {
-        buttonAddRecord.click()
+    fun addRecord(): AddCustomerPage {
+        addRecordButton.click()
         return AddCustomerPage(page)
     }
 
     fun fillSearchName(text: String): ListPage {
-        fieldSearchName.fill(text)
-        fieldSearchName.press("Enter")
-        clearSearchName.waitFor()
+        searchNameField.fill(text)
+        searchNameField.press("Enter")
+        waitForLocator(clearSearchButton)
         return this
     }
 
-    fun clickToggleSelectAll(): ListPage {
-        radioToggleSelectAll.click()
+    fun toggleSelectAll(): ListPage {
+        toggleSelectAllButton.click()
         return this
     }
 
-    fun clickDeleteSelected(): ListPage {
-        buttonDeleteSelected.click()
+    fun deleteSelected(): ListPage {
+        deleteSelectedButton.click()
         return this
     }
 
-    fun getTextModal(text: String): String = getText(bodyModal).trim()
+    fun getDeleteAlertText(): String = getText(deleteAlertBody).trim()
 
-    fun clickModalDelete(): ListPage {
-        buttonModalDelete.click()
+    fun confirmDelete(): ListPage {
+        modalConfirmButton.click()
         return this
     }
 
-    fun getTextSuccess(text: String): String = getText(messageSuccess)
+    fun getMessage(): String = getText(message)
 
 }
