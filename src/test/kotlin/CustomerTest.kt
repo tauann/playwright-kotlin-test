@@ -1,13 +1,12 @@
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import page.AddCustomerPage
 import page.ListPage
 import util.BaseTest
-import kotlin.test.assertEquals
-
-private const val SAVE_SUCCESS_MESSAGE = "Your data has been successfully stored into the database. Edit Record or Go back to list"
-private const val DELETE_QUESTION = "Are you sure that you want to delete this 1 item?"
-private const val DELETE_SUCCESSFULL = "Your data has been successfully deleted from the database."
+import util.Constants.DELETE_QUESTION
+import util.Constants.DELETE_SUCCESSFULL
+import util.Constants.SAVE_SUCCESS_MESSAGE
 
 class CustomerTest : BaseTest() {
 
@@ -25,9 +24,8 @@ class CustomerTest : BaseTest() {
     @Test
     fun shouldAddACustomer() {
         listPage.addRecord()
-
         addCustomerPage
-            .fillCustomerName("User Test 1")
+            .fillCustomerName("User 1 Test")
             .fillContactLastName("Test")
             .fillContactFirstName("User")
             .fillPhone("99 99999-9999")
@@ -41,15 +39,14 @@ class CustomerTest : BaseTest() {
             .fillCreditLimit("999999")
             .save()
 
-        assertEquals(SAVE_SUCCESS_MESSAGE, addCustomerPage.getReportSuccessText())
+        Assertions.assertEquals(SAVE_SUCCESS_MESSAGE, addCustomerPage.getReportSuccessText())
     }
 
     @Test
     fun shouldAddAndDeleteCustomer() {
-        val name = "User Test 2"
+        val name = "User 2 Test"
 
         listPage.addRecord()
-
         addCustomerPage
             .fillCustomerName(name)
             .fillContactLastName("Test")
@@ -65,17 +62,16 @@ class CustomerTest : BaseTest() {
             .fillCreditLimit("999999")
             .save()
             .goBackToList()
-
         listPage
             .fillSearchName(name)
             .toggleSelectAll()
             .deleteSelected()
 
-        assertEquals(DELETE_QUESTION, listPage.getDeleteAlertText())
+        Assertions.assertEquals(DELETE_QUESTION, listPage.getDeleteAlertText())
 
         listPage.confirmDelete()
 
-        assertEquals(DELETE_SUCCESSFULL, listPage.getMessage())
+        Assertions.assertEquals(DELETE_SUCCESSFULL, listPage.getMessage())
     }
 
 }
